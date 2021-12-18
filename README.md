@@ -25,5 +25,5 @@ package.
 
 Links to each solution:
 
-- [Day 1](blob/master/src/main/java/hu/tamasruszka/adventofcode/solution/Day01.java)
-- [Day 2](blob/master/src/main/java/hu/tamasruszka/adventofcode/solution/Day02.java)
+- [Day 1](src/main/java/hu/tamasruszka/adventofcode/solution/Day01.java)
+- [Day 2](src/main/java/hu/tamasruszka/adventofcode/solution/Day02.java)
