@@ -15,7 +15,7 @@ public class Day01 {
 
 	private static final String INPUT_FILE_PATH = "sources/source-01.txt";
 
-	public void part1() {
+	public int part1() {
 		List<String> sourceLines = readSourceFile(INPUT_FILE_PATH);
 		List<Integer> depthValues = sourceLines.stream()
 											   .mapToInt(Integer::parseInt)
@@ -34,12 +34,14 @@ public class Day01 {
 
 		log.info("Day 1 - Part 1 solution");
 		log.info("Depth increased {} times", increasedCount);
+
+		return increasedCount;
 	}
 
 	/**
 	 * Lazy solution
 	 */
-	public void part2V1() {
+	public int part2V1() {
 		List<String> sourceLines = readSourceFile(INPUT_FILE_PATH);
 		List<Integer> depthValues = sourceLines.stream()
 											   .mapToInt(Integer::parseInt)
@@ -65,13 +67,15 @@ public class Day01 {
 
 		log.info("Day 1 - Part 2 solution - V1");
 		log.info("Depth increased {} times", increasedCount);
+
+		return increasedCount;
 	}
 
 	/**
 	 * "Professional" solution, with variable window size
 	 */
 	@SuppressWarnings("SameParameterValue")
-	public void part2V2(int windowSize) {
+	public int part2V2(int windowSize) {
 		List<String> sourceLines = readSourceFile(INPUT_FILE_PATH);
 		List<Integer> depthValues = sourceLines.stream()
 											   .mapToInt(Integer::parseInt)
@@ -97,6 +101,8 @@ public class Day01 {
 
 		log.info("Day 1 - Part 2 solution - V2");
 		log.info("Depth increased {} times", increasedCount);
+
+		return increasedCount;
 	}
 
 }

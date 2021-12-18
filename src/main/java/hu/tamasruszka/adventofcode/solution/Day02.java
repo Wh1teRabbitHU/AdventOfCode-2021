@@ -17,7 +17,7 @@ public class Day02 {
 	private static final String INPUT_FILE_PATH = "sources/source-02.txt";
 	private static final String INSTRUCTION_SEPARATOR = " ";
 
-	public void part1() {
+	public int part1() {
 		List<String> sourceLines = readSourceFile(INPUT_FILE_PATH);
 
 		int posX = 0;
@@ -27,7 +27,7 @@ public class Day02 {
 			var optionalInstruction = parseInstruction(line);
 
 			if (optionalInstruction.isEmpty()) {
-				return;
+				return -1;
 			}
 
 			var instruction = optionalInstruction.get();
@@ -51,9 +51,11 @@ public class Day02 {
 
 		log.info("Day 2 - Part 1 solution");
 		log.info("Final position: {}", finalPosition);
+
+		return finalPosition;
 	}
 
-	public void part2() {
+	public int part2() {
 		List<String> sourceLines = readSourceFile(INPUT_FILE_PATH);
 
 		int posX = 0;
@@ -64,7 +66,7 @@ public class Day02 {
 			var optionalInstruction = parseInstruction(line);
 
 			if (optionalInstruction.isEmpty()) {
-				return;
+				return -1;
 			}
 
 			var instruction = optionalInstruction.get();
@@ -89,6 +91,8 @@ public class Day02 {
 
 		log.info("Day 2 - Part 2 solution");
 		log.info("Final position: {}", finalPosition);
+
+		return finalPosition;
 	}
 
 	private Optional<Instruction> parseInstruction(String instruction) {
