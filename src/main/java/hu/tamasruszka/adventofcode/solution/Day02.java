@@ -3,9 +3,11 @@ package hu.tamasruszka.adventofcode.solution;
 import hu.tamasruszka.adventofcode.exception.CommandParseException;
 import hu.tamasruszka.adventofcode.exception.UnknownValueException;
 import hu.tamasruszka.adventofcode.model.Command;
+import hu.tamasruszka.adventofcode.model.Instruction;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
+import java.util.Optional;
 
 import static hu.tamasruszka.adventofcode.util.FileUtil.readSourceFile;
 
@@ -13,7 +15,7 @@ import static hu.tamasruszka.adventofcode.util.FileUtil.readSourceFile;
 public class Day02 {
 
 	private static final String INPUT_FILE_PATH = "sources/source-02.txt";
-	private static final String COMMAND_SEPARATOR = " ";
+	private static final String INSTRUCTION_SEPARATOR = " ";
 
 	public static void main(String[] args) {
 		part1();
@@ -26,39 +28,27 @@ public class Day02 {
 		int posX = 0;
 		int posY = 0;
 
-		for (String cmd : sourceLines) {
-			Command command;
-			int distance;
-			String[] cmdParts = cmd.split(COMMAND_SEPARATOR);
+		for (String line : sourceLines) {
+			var optionalInstruction = parseInstruction(line);
 
-			if (cmdParts.length != 2) {
-				log.error("Unknown command structure! {}", cmd);
+			if (optionalInstruction.isEmpty()) {
 				return;
 			}
 
-			try {
-				command = Command.getCommand(cmdParts[0]);
-				distance = Integer.parseInt(cmdParts[1]);
-			} catch (NumberFormatException ex) {
-				log.error("The input distance value is malformed or missing! {}", cmdParts[1]);
-				return;
-			} catch (CommandParseException ex) {
-				log.error("The input command is malformed or missing! {}", cmdParts[0]);
-				return;
-			}
+			var instruction = optionalInstruction.get();
 
-			switch (command) {
+			switch (instruction.getCommand()) {
 				case UP:
-					posY -= distance;
+					posY -= instruction.getDistance();
 					break;
 				case DOWN:
-					posY += distance;
+					posY += instruction.getDistance();
 					break;
 				case FORWARD:
-					posX += distance;
+					posX += instruction.getDistance();
 					break;
 				default:
-					throw new UnknownValueException("Unknown command value: " + command);
+					throw new UnknownValueException("Unknown command value: " + instruction.getCommand());
 			}
 		}
 
@@ -75,40 +65,28 @@ public class Day02 {
 		int posY = 0;
 		int aim = 0;
 
-		for (String cmd : sourceLines) {
-			Command command;
-			int distance;
-			String[] cmdParts = cmd.split(COMMAND_SEPARATOR);
+		for (String line : sourceLines) {
+			var optionalInstruction = parseInstruction(line);
 
-			if (cmdParts.length != 2) {
-				log.error("Unknown command structure! {}", cmd);
+			if (optionalInstruction.isEmpty()) {
 				return;
 			}
 
-			try {
-				command = Command.getCommand(cmdParts[0]);
-				distance = Integer.parseInt(cmdParts[1]);
-			} catch (NumberFormatException ex) {
-				log.error("The input distance value is malformed or missing! {}", cmdParts[1]);
-				return;
-			} catch (CommandParseException ex) {
-				log.error("The input command is malformed or missing! {}", cmdParts[0]);
-				return;
-			}
+			var instruction = optionalInstruction.get();
 
-			switch (command) {
+			switch (instruction.getCommand()) {
 				case UP:
-					aim -= distance;
+					aim -= instruction.getDistance();
 					break;
 				case DOWN:
-					aim += distance;
+					aim += instruction.getDistance();
 					break;
 				case FORWARD:
-					posX += distance;
-					posY += aim * distance;
+					posX += instruction.getDistance();
+					posY += aim * instruction.getDistance();
 					break;
 				default:
-					throw new UnknownValueException("Unknown command value: " + command);
+					throw new UnknownValueException("Unknown command value: " + instruction.getCommand());
 			}
 		}
 
@@ -116,5 +94,30 @@ public class Day02 {
 
 		log.info("Part 2 solution");
 		log.info("Final position: {}", finalPosition);
+	}
+
+	private static Optional<Instruction> parseInstruction(String instruction) {
+		String[] instructionParts = instruction.split(INSTRUCTION_SEPARATOR);
+
+		if (instructionParts.length != 2) {
+			log.error("Unknown command structure! {}", instruction);
+
+			return Optional.empty();
+		}
+
+		try {
+			Command command = Command.getCommand(instructionParts[0]);
+			int distance = Integer.parseInt(instructionParts[1]);
+
+			return Optional.of(new Instruction(command, distance));
+		} catch (NumberFormatException ex) {
+			log.error("The input distance value is malformed or missing! {}", instructionParts[1]);
+
+			return Optional.empty();
+		} catch (CommandParseException ex) {
+			log.error("The input command is malformed or missing! {}", instructionParts[0]);
+
+			return Optional.empty();
+		}
 	}
 }
