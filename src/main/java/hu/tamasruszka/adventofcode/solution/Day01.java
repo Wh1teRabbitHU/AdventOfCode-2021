@@ -2,7 +2,6 @@ package hu.tamasruszka.adventofcode.solution;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,13 +14,13 @@ public class Day01 {
 	private static final Integer PART_2_WINDOW_SIZE = 3;
 	private static final String INPUT_FILE_PATH = "sources/source-01.txt";
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		part1();
 		part2V1();
 		part2V2(PART_2_WINDOW_SIZE);
 	}
 
-	private static void part1() throws IOException {
+	private static void part1() {
 		List<String> sourceLines = readSourceFile(INPUT_FILE_PATH);
 		List<Integer> depthValues = sourceLines.stream()
 											   .mapToInt(Integer::parseInt)
@@ -44,10 +43,8 @@ public class Day01 {
 
 	/**
 	 * Lazy solution
-	 *
-	 * @throws IOException If the input file is missing
 	 */
-	private static void part2V1() throws IOException {
+	private static void part2V1() {
 		List<String> sourceLines = readSourceFile(INPUT_FILE_PATH);
 		List<Integer> depthValues = sourceLines.stream()
 											   .mapToInt(Integer::parseInt)
@@ -77,11 +74,9 @@ public class Day01 {
 
 	/**
 	 * "Professional" solution, with variable window size
-	 *
-	 * @throws IOException If the input file is missing
 	 */
 	@SuppressWarnings("SameParameterValue")
-	private static void part2V2(int windowSize) throws IOException {
+	private static void part2V2(int windowSize) {
 		List<String> sourceLines = readSourceFile(INPUT_FILE_PATH);
 		List<Integer> depthValues = sourceLines.stream()
 											   .mapToInt(Integer::parseInt)
