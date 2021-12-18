@@ -1,21 +1,17 @@
-package hu.tamasruszka.adventofcode;
+package hu.tamasruszka.adventofcode.solution;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.util.Objects.requireNonNull;
+import static hu.tamasruszka.adventofcode.util.FileUtil.readSourceFile;
 
 
 @Slf4j
 public class Day01 {
 
-	private static final ClassLoader CLASS_LOADER = Day01.class.getClassLoader();
 	private static final Integer PART_2_WINDOW_SIZE = 3;
 	private static final String INPUT_FILE_PATH = "sources/source-01.txt";
 
@@ -26,7 +22,7 @@ public class Day01 {
 	}
 
 	private static void part1() throws IOException {
-		List<String> sourceLines = readSourceFile();
+		List<String> sourceLines = readSourceFile(INPUT_FILE_PATH);
 		List<Integer> depthValues = sourceLines.stream()
 											   .mapToInt(Integer::parseInt)
 											   .boxed()
@@ -52,7 +48,7 @@ public class Day01 {
 	 * @throws IOException If the input file is missing
 	 */
 	private static void part2V1() throws IOException {
-		List<String> sourceLines = readSourceFile();
+		List<String> sourceLines = readSourceFile(INPUT_FILE_PATH);
 		List<Integer> depthValues = sourceLines.stream()
 											   .mapToInt(Integer::parseInt)
 											   .boxed()
@@ -86,7 +82,7 @@ public class Day01 {
 	 */
 	@SuppressWarnings("SameParameterValue")
 	private static void part2V2(int windowSize) throws IOException {
-		List<String> sourceLines = readSourceFile();
+		List<String> sourceLines = readSourceFile(INPUT_FILE_PATH);
 		List<Integer> depthValues = sourceLines.stream()
 											   .mapToInt(Integer::parseInt)
 											   .boxed()
@@ -113,15 +109,4 @@ public class Day01 {
 		log.info("Depth increased {} times", increasedCount);
 	}
 
-	private static List<String> readSourceFile() throws IOException {
-		List<String> lines = new ArrayList<>();
-
-		try (var reader = new BufferedReader(new InputStreamReader(requireNonNull(CLASS_LOADER.getResourceAsStream(INPUT_FILE_PATH))))) {
-			while (reader.ready()) {
-				lines.add(reader.readLine());
-			}
-		}
-
-		return lines;
-	}
 }
