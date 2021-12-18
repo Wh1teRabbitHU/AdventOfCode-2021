@@ -17,6 +17,7 @@ public class Day02 {
 
 	public static void main(String[] args) {
 		part1();
+		part2();
 	}
 
 	private static void part1() {
@@ -64,6 +65,56 @@ public class Day02 {
 		int finalPosition = posX * posY;
 
 		log.info("Part 1 solution");
+		log.info("Final position: {}", finalPosition);
+	}
+
+	private static void part2() {
+		List<String> sourceLines = readSourceFile(INPUT_FILE_PATH);
+
+		int posX = 0;
+		int posY = 0;
+		int aim = 0;
+
+		for (String cmd : sourceLines) {
+			Command command;
+			int distance;
+			String[] cmdParts = cmd.split(COMMAND_SEPARATOR);
+
+			if (cmdParts.length != 2) {
+				log.error("Unknown command structure! {}", cmd);
+				return;
+			}
+
+			try {
+				command = Command.getCommand(cmdParts[0]);
+				distance = Integer.parseInt(cmdParts[1]);
+			} catch (NumberFormatException ex) {
+				log.error("The input distance value is malformed or missing! {}", cmdParts[1]);
+				return;
+			} catch (CommandParseException ex) {
+				log.error("The input command is malformed or missing! {}", cmdParts[0]);
+				return;
+			}
+
+			switch (command) {
+				case UP:
+					aim -= distance;
+					break;
+				case DOWN:
+					aim += distance;
+					break;
+				case FORWARD:
+					posX += distance;
+					posY += aim * distance;
+					break;
+				default:
+					throw new UnknownValueException("Unknown command value: " + command);
+			}
+		}
+
+		int finalPosition = posX * posY;
+
+		log.info("Part 2 solution");
 		log.info("Final position: {}", finalPosition);
 	}
 }
