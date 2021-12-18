@@ -1,4 +1,4 @@
-# AdventOfCode - 2021 - Java solutions
+# Advent of Code - 2021 - Java solutions
 
 ## Description
 
