@@ -17,12 +17,7 @@ public class Day02 {
 	private static final String INPUT_FILE_PATH = "sources/source-02.txt";
 	private static final String INSTRUCTION_SEPARATOR = " ";
 
-	public static void main(String[] args) {
-		part1();
-		part2();
-	}
-
-	private static void part1() {
+	public void part1() {
 		List<String> sourceLines = readSourceFile(INPUT_FILE_PATH);
 
 		int posX = 0;
@@ -54,11 +49,11 @@ public class Day02 {
 
 		int finalPosition = posX * posY;
 
-		log.info("Part 1 solution");
+		log.info("Day 2 - Part 1 solution");
 		log.info("Final position: {}", finalPosition);
 	}
 
-	private static void part2() {
+	public void part2() {
 		List<String> sourceLines = readSourceFile(INPUT_FILE_PATH);
 
 		int posX = 0;
@@ -92,11 +87,11 @@ public class Day02 {
 
 		int finalPosition = posX * posY;
 
-		log.info("Part 2 solution");
+		log.info("Day 2 - Part 2 solution");
 		log.info("Final position: {}", finalPosition);
 	}
 
-	private static Optional<Instruction> parseInstruction(String instruction) {
+	private Optional<Instruction> parseInstruction(String instruction) {
 		String[] instructionParts = instruction.split(INSTRUCTION_SEPARATOR);
 
 		if (instructionParts.length != 2) {

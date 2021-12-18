@@ -11,16 +11,11 @@ import static hu.tamasruszka.adventofcode.util.FileUtil.readSourceFile;
 @Slf4j
 public class Day01 {
 
-	private static final Integer PART_2_WINDOW_SIZE = 3;
+	public static final Integer PART_2_WINDOW_SIZE = 3;
+
 	private static final String INPUT_FILE_PATH = "sources/source-01.txt";
 
-	public static void main(String[] args) {
-		part1();
-		part2V1();
-		part2V2(PART_2_WINDOW_SIZE);
-	}
-
-	private static void part1() {
+	public void part1() {
 		List<String> sourceLines = readSourceFile(INPUT_FILE_PATH);
 		List<Integer> depthValues = sourceLines.stream()
 											   .mapToInt(Integer::parseInt)
@@ -37,14 +32,14 @@ public class Day01 {
 			}
 		}
 
-		log.info("Part 1 solution");
+		log.info("Day 1 - Part 1 solution");
 		log.info("Depth increased {} times", increasedCount);
 	}
 
 	/**
 	 * Lazy solution
 	 */
-	private static void part2V1() {
+	public void part2V1() {
 		List<String> sourceLines = readSourceFile(INPUT_FILE_PATH);
 		List<Integer> depthValues = sourceLines.stream()
 											   .mapToInt(Integer::parseInt)
@@ -68,7 +63,7 @@ public class Day01 {
 			}
 		}
 
-		log.info("Part 2 solution - V1");
+		log.info("Day 1 - Part 2 solution - V1");
 		log.info("Depth increased {} times", increasedCount);
 	}
 
@@ -76,7 +71,7 @@ public class Day01 {
 	 * "Professional" solution, with variable window size
 	 */
 	@SuppressWarnings("SameParameterValue")
-	private static void part2V2(int windowSize) {
+	public void part2V2(int windowSize) {
 		List<String> sourceLines = readSourceFile(INPUT_FILE_PATH);
 		List<Integer> depthValues = sourceLines.stream()
 											   .mapToInt(Integer::parseInt)
@@ -100,7 +95,7 @@ public class Day01 {
 			}
 		}
 
-		log.info("Part 2 solution - V2");
+		log.info("Day 1 - Part 2 solution - V2");
 		log.info("Depth increased {} times", increasedCount);
 	}
 
