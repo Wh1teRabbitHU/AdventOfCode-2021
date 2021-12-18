@@ -16,11 +16,13 @@ import static java.util.Objects.requireNonNull;
 public class Day01 {
 
 	private static final ClassLoader CLASS_LOADER = Day01.class.getClassLoader();
+	private static final Integer PART_2_WINDOW_SIZE = 3;
 	private static final String INPUT_FILE_PATH = "sources/source-01.txt";
 
 	public static void main(String[] args) throws IOException {
 		part1();
-		part2();
+		part2V1();
+		part2V2(PART_2_WINDOW_SIZE);
 	}
 
 	private static void part1() throws IOException {
@@ -44,7 +46,12 @@ public class Day01 {
 		log.info("Depth increased {} times", increasedCount);
 	}
 
-	private static void part2() throws IOException {
+	/**
+	 * Lazy solution
+	 *
+	 * @throws IOException If the input file is missing
+	 */
+	private static void part2V1() throws IOException {
 		List<String> sourceLines = readSourceFile();
 		List<Integer> depthValues = sourceLines.stream()
 											   .mapToInt(Integer::parseInt)
@@ -68,7 +75,41 @@ public class Day01 {
 			}
 		}
 
-		log.info("Part 2 solution");
+		log.info("Part 2 solution - V1");
+		log.info("Depth increased {} times", increasedCount);
+	}
+
+	/**
+	 * "Professional" solution, with variable window size
+	 *
+	 * @throws IOException If the input file is missing
+	 */
+	@SuppressWarnings("SameParameterValue")
+	private static void part2V2(int windowSize) throws IOException {
+		List<String> sourceLines = readSourceFile();
+		List<Integer> depthValues = sourceLines.stream()
+											   .mapToInt(Integer::parseInt)
+											   .boxed()
+											   .collect(Collectors.toList());
+		int increasedCount = 0;
+
+		for (int i = 0; i < depthValues.size() - windowSize; i++) {
+			List<Integer> currentDepthList = depthValues.subList(i, i + windowSize);
+			List<Integer> nextDepthList = depthValues.subList(i + 1, i + windowSize + 1);
+
+			int currentDepthAggregated = currentDepthList.stream()
+														 .reduce(Integer::sum)
+														 .orElse(0);
+			int nextDepthAggregated = nextDepthList.stream()
+												   .reduce(Integer::sum)
+												   .orElse(0);
+
+			if (nextDepthAggregated > currentDepthAggregated) {
+				increasedCount++;
+			}
+		}
+
+		log.info("Part 2 solution - V2");
 		log.info("Depth increased {} times", increasedCount);
 	}
 
